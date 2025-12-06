@@ -1,0 +1,1080 @@
+[{
+  "_id": {
+    "$oid": "6933731fdf5e423568818134"
+  },
+  "homeTeam": "Mexico",
+  "awayTeam": "South Africa",
+  "group": "A",
+  "startTime": {
+    "$date": "2026-06-11T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818135"
+  },
+  "homeTeam": "South Korea",
+  "awayTeam": "Denmark-North Macedonia-Czechia-Republic of Ireland",
+  "group": "A",
+  "startTime": {
+    "$date": "2026-06-11T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818136"
+  },
+  "homeTeam": "Mexico",
+  "awayTeam": "South Korea",
+  "group": "A",
+  "startTime": {
+    "$date": "2026-06-11T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818137"
+  },
+  "homeTeam": "South Africa",
+  "awayTeam": "Denmark-North Macedonia-Czechia-Republic of Ireland",
+  "group": "A",
+  "startTime": {
+    "$date": "2026-06-12T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818138"
+  },
+  "homeTeam": "Mexico",
+  "awayTeam": "Denmark-North Macedonia-Czechia-Republic of Ireland",
+  "group": "A",
+  "startTime": {
+    "$date": "2026-06-12T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818139"
+  },
+  "homeTeam": "South Africa",
+  "awayTeam": "South Korea",
+  "group": "A",
+  "startTime": {
+    "$date": "2026-06-12T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881813a"
+  },
+  "homeTeam": "Canada",
+  "awayTeam": "Switzerland",
+  "group": "B",
+  "startTime": {
+    "$date": "2026-06-13T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881813b"
+  },
+  "homeTeam": "Qatar",
+  "awayTeam": "Italy-Northern Ireland-Wales-Bosnia & Herzegovina",
+  "group": "B",
+  "startTime": {
+    "$date": "2026-06-13T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881813c"
+  },
+  "homeTeam": "Canada",
+  "awayTeam": "Qatar",
+  "group": "B",
+  "startTime": {
+    "$date": "2026-06-13T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881813d"
+  },
+  "homeTeam": "Switzerland",
+  "awayTeam": "Italy-Northern Ireland-Wales-Bosnia & Herzegovina",
+  "group": "B",
+  "startTime": {
+    "$date": "2026-06-14T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881813e"
+  },
+  "homeTeam": "Canada",
+  "awayTeam": "Italy-Northern Ireland-Wales-Bosnia & Herzegovina",
+  "group": "B",
+  "startTime": {
+    "$date": "2026-06-14T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881813f"
+  },
+  "homeTeam": "Switzerland",
+  "awayTeam": "Qatar",
+  "group": "B",
+  "startTime": {
+    "$date": "2026-06-14T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818140"
+  },
+  "homeTeam": "Brazil",
+  "awayTeam": "Morocco",
+  "group": "C",
+  "startTime": {
+    "$date": "2026-06-15T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818141"
+  },
+  "homeTeam": "Scotland",
+  "awayTeam": "Haiti",
+  "group": "C",
+  "startTime": {
+    "$date": "2026-06-15T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818142"
+  },
+  "homeTeam": "Brazil",
+  "awayTeam": "Scotland",
+  "group": "C",
+  "startTime": {
+    "$date": "2026-06-15T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818143"
+  },
+  "homeTeam": "Morocco",
+  "awayTeam": "Haiti",
+  "group": "C",
+  "startTime": {
+    "$date": "2026-06-16T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818144"
+  },
+  "homeTeam": "Brazil",
+  "awayTeam": "Haiti",
+  "group": "C",
+  "startTime": {
+    "$date": "2026-06-16T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818145"
+  },
+  "homeTeam": "Morocco",
+  "awayTeam": "Scotland",
+  "group": "C",
+  "startTime": {
+    "$date": "2026-06-16T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818146"
+  },
+  "homeTeam": "United States",
+  "awayTeam": "Paraguay",
+  "group": "D",
+  "startTime": {
+    "$date": "2026-06-17T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818147"
+  },
+  "homeTeam": "Australia",
+  "awayTeam": "Turkey-Romania-Slovakia-Kosovo",
+  "group": "D",
+  "startTime": {
+    "$date": "2026-06-17T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818148"
+  },
+  "homeTeam": "United States",
+  "awayTeam": "Australia",
+  "group": "D",
+  "startTime": {
+    "$date": "2026-06-17T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818149"
+  },
+  "homeTeam": "Paraguay",
+  "awayTeam": "Turkey-Romania-Slovakia-Kosovo",
+  "group": "D",
+  "startTime": {
+    "$date": "2026-06-18T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881814a"
+  },
+  "homeTeam": "United States",
+  "awayTeam": "Turkey-Romania-Slovakia-Kosovo",
+  "group": "D",
+  "startTime": {
+    "$date": "2026-06-18T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881814b"
+  },
+  "homeTeam": "Paraguay",
+  "awayTeam": "Australia",
+  "group": "D",
+  "startTime": {
+    "$date": "2026-06-18T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881814c"
+  },
+  "homeTeam": "Germany",
+  "awayTeam": "Curaçao",
+  "group": "E",
+  "startTime": {
+    "$date": "2026-06-19T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881814d"
+  },
+  "homeTeam": "Ivory Coast",
+  "awayTeam": "Ecuador",
+  "group": "E",
+  "startTime": {
+    "$date": "2026-06-19T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881814e"
+  },
+  "homeTeam": "Germany",
+  "awayTeam": "Ivory Coast",
+  "group": "E",
+  "startTime": {
+    "$date": "2026-06-19T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881814f"
+  },
+  "homeTeam": "Curaçao",
+  "awayTeam": "Ecuador",
+  "group": "E",
+  "startTime": {
+    "$date": "2026-06-20T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818150"
+  },
+  "homeTeam": "Germany",
+  "awayTeam": "Ecuador",
+  "group": "E",
+  "startTime": {
+    "$date": "2026-06-20T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818151"
+  },
+  "homeTeam": "Curaçao",
+  "awayTeam": "Ivory Coast",
+  "group": "E",
+  "startTime": {
+    "$date": "2026-06-20T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818152"
+  },
+  "homeTeam": "Netherlands",
+  "awayTeam": "Japan",
+  "group": "F",
+  "startTime": {
+    "$date": "2026-06-21T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818153"
+  },
+  "homeTeam": "Tunisia",
+  "awayTeam": "Ukraine-Sweden-Poland-Albania",
+  "group": "F",
+  "startTime": {
+    "$date": "2026-06-21T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818154"
+  },
+  "homeTeam": "Netherlands",
+  "awayTeam": "Tunisia",
+  "group": "F",
+  "startTime": {
+    "$date": "2026-06-21T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818155"
+  },
+  "homeTeam": "Japan",
+  "awayTeam": "Ukraine-Sweden-Poland-Albania",
+  "group": "F",
+  "startTime": {
+    "$date": "2026-06-22T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818156"
+  },
+  "homeTeam": "Netherlands",
+  "awayTeam": "Ukraine-Sweden-Poland-Albania",
+  "group": "F",
+  "startTime": {
+    "$date": "2026-06-22T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818157"
+  },
+  "homeTeam": "Japan",
+  "awayTeam": "Tunisia",
+  "group": "F",
+  "startTime": {
+    "$date": "2026-06-22T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818158"
+  },
+  "homeTeam": "Belgium",
+  "awayTeam": "Egypt",
+  "group": "G",
+  "startTime": {
+    "$date": "2026-06-23T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818159"
+  },
+  "homeTeam": "Iran",
+  "awayTeam": "New Zealand",
+  "group": "G",
+  "startTime": {
+    "$date": "2026-06-23T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881815a"
+  },
+  "homeTeam": "Belgium",
+  "awayTeam": "Iran",
+  "group": "G",
+  "startTime": {
+    "$date": "2026-06-23T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881815b"
+  },
+  "homeTeam": "Egypt",
+  "awayTeam": "New Zealand",
+  "group": "G",
+  "startTime": {
+    "$date": "2026-06-24T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881815c"
+  },
+  "homeTeam": "Belgium",
+  "awayTeam": "New Zealand",
+  "group": "G",
+  "startTime": {
+    "$date": "2026-06-24T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881815d"
+  },
+  "homeTeam": "Egypt",
+  "awayTeam": "Iran",
+  "group": "G",
+  "startTime": {
+    "$date": "2026-06-24T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881815e"
+  },
+  "homeTeam": "Spain",
+  "awayTeam": "Uruguay",
+  "group": "H",
+  "startTime": {
+    "$date": "2026-06-25T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881815f"
+  },
+  "homeTeam": "Saudi Arabia",
+  "awayTeam": "Cape Verde",
+  "group": "H",
+  "startTime": {
+    "$date": "2026-06-25T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818160"
+  },
+  "homeTeam": "Spain",
+  "awayTeam": "Saudi Arabia",
+  "group": "H",
+  "startTime": {
+    "$date": "2026-06-25T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818161"
+  },
+  "homeTeam": "Uruguay",
+  "awayTeam": "Cape Verde",
+  "group": "H",
+  "startTime": {
+    "$date": "2026-06-26T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818162"
+  },
+  "homeTeam": "Spain",
+  "awayTeam": "Cape Verde",
+  "group": "H",
+  "startTime": {
+    "$date": "2026-06-26T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818163"
+  },
+  "homeTeam": "Uruguay",
+  "awayTeam": "Saudi Arabia",
+  "group": "H",
+  "startTime": {
+    "$date": "2026-06-26T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818164"
+  },
+  "homeTeam": "France",
+  "awayTeam": "Senegal",
+  "group": "I",
+  "startTime": {
+    "$date": "2026-06-27T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818165"
+  },
+  "homeTeam": "Norway",
+  "awayTeam": "Bolivia-Iraq-Suriname",
+  "group": "I",
+  "startTime": {
+    "$date": "2026-06-27T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818166"
+  },
+  "homeTeam": "France",
+  "awayTeam": "Norway",
+  "group": "I",
+  "startTime": {
+    "$date": "2026-06-27T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818167"
+  },
+  "homeTeam": "Senegal",
+  "awayTeam": "Bolivia-Iraq-Suriname",
+  "group": "I",
+  "startTime": {
+    "$date": "2026-06-28T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818168"
+  },
+  "homeTeam": "France",
+  "awayTeam": "Bolivia-Iraq-Suriname",
+  "group": "I",
+  "startTime": {
+    "$date": "2026-06-28T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818169"
+  },
+  "homeTeam": "Senegal",
+  "awayTeam": "Norway",
+  "group": "I",
+  "startTime": {
+    "$date": "2026-06-28T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881816a"
+  },
+  "homeTeam": "Argentina",
+  "awayTeam": "Algeria",
+  "group": "J",
+  "startTime": {
+    "$date": "2026-06-29T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881816b"
+  },
+  "homeTeam": "Austria",
+  "awayTeam": "Jordan",
+  "group": "J",
+  "startTime": {
+    "$date": "2026-06-29T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881816c"
+  },
+  "homeTeam": "Argentina",
+  "awayTeam": "Austria",
+  "group": "J",
+  "startTime": {
+    "$date": "2026-06-29T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881816d"
+  },
+  "homeTeam": "Algeria",
+  "awayTeam": "Jordan",
+  "group": "J",
+  "startTime": {
+    "$date": "2026-06-30T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881816e"
+  },
+  "homeTeam": "Argentina",
+  "awayTeam": "Jordan",
+  "group": "J",
+  "startTime": {
+    "$date": "2026-06-30T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881816f"
+  },
+  "homeTeam": "Algeria",
+  "awayTeam": "Austria",
+  "group": "J",
+  "startTime": {
+    "$date": "2026-06-30T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818170"
+  },
+  "homeTeam": "Portugal",
+  "awayTeam": "Colombia",
+  "group": "K",
+  "startTime": {
+    "$date": "2026-07-01T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818171"
+  },
+  "homeTeam": "Uzbekistan",
+  "awayTeam": "DR Congo-Jamaica-New Caledonia",
+  "group": "K",
+  "startTime": {
+    "$date": "2026-07-01T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818172"
+  },
+  "homeTeam": "Portugal",
+  "awayTeam": "Uzbekistan",
+  "group": "K",
+  "startTime": {
+    "$date": "2026-07-01T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818173"
+  },
+  "homeTeam": "Colombia",
+  "awayTeam": "DR Congo-Jamaica-New Caledonia",
+  "group": "K",
+  "startTime": {
+    "$date": "2026-07-02T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818174"
+  },
+  "homeTeam": "Portugal",
+  "awayTeam": "DR Congo-Jamaica-New Caledonia",
+  "group": "K",
+  "startTime": {
+    "$date": "2026-07-02T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818175"
+  },
+  "homeTeam": "Colombia",
+  "awayTeam": "Uzbekistan",
+  "group": "K",
+  "startTime": {
+    "$date": "2026-07-02T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818176"
+  },
+  "homeTeam": "England",
+  "awayTeam": "Croatia",
+  "group": "L",
+  "startTime": {
+    "$date": "2026-07-03T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818177"
+  },
+  "homeTeam": "Panama",
+  "awayTeam": "Ghana",
+  "group": "L",
+  "startTime": {
+    "$date": "2026-07-03T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818178"
+  },
+  "homeTeam": "England",
+  "awayTeam": "Panama",
+  "group": "L",
+  "startTime": {
+    "$date": "2026-07-03T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e423568818179"
+  },
+  "homeTeam": "Croatia",
+  "awayTeam": "Ghana",
+  "group": "L",
+  "startTime": {
+    "$date": "2026-07-04T12:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881817a"
+  },
+  "homeTeam": "England",
+  "awayTeam": "Ghana",
+  "group": "L",
+  "startTime": {
+    "$date": "2026-07-04T15:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6933731fdf5e42356881817b"
+  },
+  "homeTeam": "Croatia",
+  "awayTeam": "Panama",
+  "group": "L",
+  "startTime": {
+    "$date": "2026-07-04T18:00:00.000Z"
+  },
+  "isFinished": false,
+  "resultHome": null,
+  "resultAway": null,
+  "__v": 0
+}]
