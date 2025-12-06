@@ -33,7 +33,7 @@ export default async function Home() {
           <Typography variant="h4" fontWeight="bold" gutterBottom sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
             World Cup Predictor
           </Typography>
-          <Typography color="text.secondary" paragraph sx={{ mb: 4 }}>
+          <Typography color="text.secondary" paragraph sx={{ mb: 4, fontSize: { xs: '0.9rem', md: '1rem' } }}>
             Join the competition, predict match scores, and climb the global leaderboard!
           </Typography>
           <Link href="/login" style={{ textDecoration: 'none' }}>
@@ -104,7 +104,7 @@ export default async function Home() {
         </Paper>
       </Box>
 
-      <Grid container spacing={2}>
+      <Grid spacing={2}>
 
         {/* MATCHES COLUMN */}
         <Grid size={{ xs: 12, md: 8 }}>
@@ -119,23 +119,36 @@ export default async function Home() {
             return (
               <Accordion key={groupName} sx={{ mb: 1.5, border: '1px solid #e0e0e0', boxShadow: 'none', '&:before': { display: 'none' } }}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ bgcolor: '#fff', px: 2 }}>
-                  <Box sx={{ width: '100%' }}>
+                  <Box sx={{ width: '100%', pr: 1 }}>
                     <Typography variant="subtitle1" color="primary" fontWeight="bold">
                       Group {groupName}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+
+                    {/* Header Text Wrapping */}
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      sx={{
+                        display: 'block',
+                        mt: 0.5,
+                        whiteSpace: 'normal',
+                        wordBreak: 'break-word',
+                        lineHeight: 1.3
+                      }}
+                    >
                       {teamList}
                     </Typography>
                   </Box>
                 </AccordionSummary>
 
                 <AccordionDetails sx={{ bgcolor: '#fafafa', p: { xs: 0.5, sm: 2 } }}>
-                  <Grid container spacing={1}>
+                  <Grid spacing={2}>
                     {groupMatches.map((match: any) => {
                       const pred = predsMap.get(match._id.toString());
                       const matchDate = new Date(match.startTime).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 
                       return (
+                        // FIX: Force xs={12} so it ALWAYS takes full width (1 column per row)
                         <Grid size={{ xs: 12 }} key={match._id}>
                           <Paper
                             elevation={0}
@@ -143,16 +156,15 @@ export default async function Home() {
                               p: 1.5,
                               border: '1px solid #eee',
                               display: 'flex',
-                              flexDirection: { xs: 'column', sm: 'row' }, // Stack on mobile
+                              flexDirection: { xs: 'column', sm: 'row' },
                               alignItems: 'center',
                               justifyContent: 'space-between',
-                              gap: { xs: 1.5, sm: 0 } // Add gap between elements on mobile
+                              gap: { xs: 1.5, sm: 0 }
                             }}
                           >
 
                             {/* HOME TEAM */}
                             <Box sx={{ flex: 1, width: '100%', display: 'flex', justifyContent: { xs: 'center', sm: 'flex-end' } }}>
-                              {/* align="right" means Text-Flag on Desktop, but thanks to our new component, it's Flag-Text on Mobile! */}
                               <TeamWithFlag teamName={match.homeTeam} align="right" />
                             </Box>
 
@@ -160,8 +172,8 @@ export default async function Home() {
                             <Box sx={{
                               mx: { xs: 0, sm: 2 },
                               textAlign: 'center',
-                              minWidth: { xs: '100%', sm: 120 }, // Full width on mobile to separate teams
-                              bgcolor: { xs: '#f5f5f5', sm: 'transparent' }, // Slight background on mobile to distinguish
+                              minWidth: { xs: '100%', sm: 120 },
+                              bgcolor: { xs: '#f5f5f5', sm: 'transparent' },
                               borderRadius: 1,
                               py: { xs: 1, sm: 0 }
                             }}>
