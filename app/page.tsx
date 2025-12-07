@@ -75,13 +75,22 @@ export default async function Home() {
     <Container maxWidth="lg" sx={{ py: 2, px: { xs: 1, sm: 2 } }}>
 
       {/* HEADER */}
+      {/* HEADER */}
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', mb: 2, gap: 2 }}>
-        <Box display="flex" alignItems="center" gap={1}>
-          <SportsSoccerIcon color="primary" sx={{ fontSize: { xs: 32, md: 44 } }} />
+        <Box display="flex" alignItems="center" gap={2}>
+          {/* FIX: Add the /worldcup prefix here */}
+          <img
+            src="/worldcup/medlar.png"
+            alt="Mespilus germanica"
+            style={{ width: 50, height: 50, objectFit: 'contain' }}
+          />
           <Typography variant="h4" fontWeight="800" color="#333" sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
             WC Predictor
           </Typography>
         </Box>
+
+        {/* ... User Info Card remains the same ... */}
+
 
         <Paper elevation={2} sx={{ p: 1, px: 2, display: 'flex', alignItems: 'center', gap: 2, bgcolor: '#fff', borderRadius: 4, width: { xs: '100%', sm: 'auto' }, justifyContent: 'space-between' }}>
           <Box display="flex" alignItems="center" gap={2}>
