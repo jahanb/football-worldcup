@@ -10,35 +10,33 @@ import Link from "next/link";
 import PredictFormMUI from "@/components/PredictFormMUI";
 import LogoutButton from "@/components/LogoutButton";
 import TeamWithFlag from "@/components/TeamWithFlag";
+import LocalTime from "@/components/LocalTime"; // Import the new 
 
 import {
   Container, Typography, Box, Paper, Chip,
   Accordion, AccordionSummary, AccordionDetails,
-  Card, CardContent, Divider, Avatar, Button,
-  Grid
+  Avatar, Button, Divider, Card, CardContent, Alert, Stack
 } from '@mui/material';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
+  // 1. UNAUTHORIZED / GUEST VIEW
   if (!session || !session.user || !session.user.id) {
     return (
       <Container maxWidth="sm" sx={{ mt: 10, textAlign: 'center', px: 2 }}>
-        <Paper elevation={3} sx={{ p: { xs: 3, md: 5 }, borderRadius: 3 }}>
-          <SportsSoccerIcon sx={{ fontSize: { xs: 60, md: 80 }, color: '#1976d2', mb: 2 }} />
-          <Typography variant="h4" fontWeight="bold" gutterBottom sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
-            World Cup Predictor
-          </Typography>
-          <Typography color="text.secondary" paragraph sx={{ mb: 4, fontSize: { xs: '0.9rem', md: '1rem' } }}>
-            Join the competition, predict match scores, and climb the global leaderboard!
-          </Typography>
+        <Paper elevation={0} sx={{ p: 5, borderRadius: '24px', border: '1px solid #e0e0e0' }}>
+          <SportsSoccerIcon sx={{ fontSize: 80, color: '#007AFF', mb: 2 }} />
+          <Typography variant="h4" fontWeight="800" gutterBottom>World Cup 2026</Typography>
+          <Typography color="text.secondary" sx={{ mb: 4 }}>Predict results and win the tournament!</Typography>
           <Link href="/login" style={{ textDecoration: 'none' }}>
-            <Button variant="contained" size="large" fullWidth>
-              Login to Play
+            <Button variant="contained" size="large" fullWidth sx={{ borderRadius: '12px', py: 2, fontWeight: 'bold', textTransform: 'none' }}>
+              Login to Start
             </Button>
           </Link>
         </Paper>
@@ -48,6 +46,7 @@ export default async function Home() {
 
   await connectDB();
 
+  // 2. DATA FETCHING
   const matches = await Match.find({}).sort({ startTime: 1 });
   const myPredictions = await Prediction.find({ userId: session.user.id });
   const users = await User.find({}).sort({ totalPoints: -1 });
@@ -72,179 +71,180 @@ export default async function Home() {
   const currentUser = users.find((u: any) => u._id.toString() === session.user.id);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 2, px: { xs: 1, sm: 2 } }}>
-
-      {/* HEADER */}
-      {/* HEADER */}
-      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', mb: 2, gap: 2 }}>
-        <Box display="flex" alignItems="center" gap={2}>
-          {/* FIX: Add the /worldcup prefix here */}
-          <img
-            src="/worldcup/medlar.png"
-            alt="Mespilus germanica"
-            style={{ width: 50, height: 50, objectFit: 'contain' }}
-          />
-          <Typography variant="h4" fontWeight="800" color="#333" sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
-            WC Predictor
-          </Typography>
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        py: 2, 
+        px: { xs: 0.5, sm: 2 }, // Ultra-thin padding for mobile to save space
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      }}
+    >
+      {/* HEADER SECTION */}
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', mb: 3, gap: 2 }}>
+        <Box display="flex" alignItems="center" gap={1.5}>
+          <img src="/worldcup/medlar.png" alt="Logo" style={{ width: 40, height: 40 }} />
+          <Typography variant="h5" fontWeight="900" sx={{ letterSpacing: '-1px' }}>WC PREDICTOR</Typography>
         </Box>
 
-        {/* ... User Info Card remains the same ... */}
-
-
-        <Paper elevation={2} sx={{ p: 1, px: 2, display: 'flex', alignItems: 'center', gap: 2, bgcolor: '#fff', borderRadius: 4, width: { xs: '100%', sm: 'auto' }, justifyContent: 'space-between' }}>
-          <Box display="flex" alignItems="center" gap={2}>
-            <Avatar sx={{ width: 36, height: 36, bgcolor: '#1976d2', fontWeight: 'bold', fontSize: 14 }}>
-              {session.user.name?.substring(0, 1).toUpperCase()}
-            </Avatar>
-            <Box>
-              <Typography variant="subtitle2" fontWeight="bold" lineHeight={1.2}>
-                {session.user.name}
-              </Typography>
-              <Typography variant="caption" display="block" color="text.secondary">
-                Total: <span style={{ fontWeight: 'bold', color: '#1976d2' }}>{currentUser?.totalPoints || 0} pts</span>
-              </Typography>
-            </Box>
+        <Paper elevation={0} sx={{ p: 1, px: 2, display: 'flex', alignItems: 'center', gap: 2, bgcolor: '#f2f2f7', borderRadius: '40px' }}>
+          <Box display="flex" alignItems="center" gap={1}>
+            <Avatar sx={{ width: 28, height: 28, bgcolor: '#007AFF', fontSize: 11 }}>{session.user.name?.charAt(0)}</Avatar>
+            <Typography variant="subtitle2" fontWeight="800">{currentUser?.totalPoints || 0} pts</Typography>
           </Box>
-          <Box display="flex" alignItems="center">
-            <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
-            <LogoutButton />
-          </Box>
+          <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
+          <LogoutButton />
         </Paper>
       </Box>
 
-      <Grid spacing={2}>
+      {/* 1-HOUR RULE ALERT */}
+      <Alert icon={<AccessTimeIcon fontSize="small" />} severity="info" sx={{ mb: 3, borderRadius: '12px', fontWeight: 600, fontSize: { xs: 11, sm: 13 } }}>
+        Predictions lock 1 hour before kickoff.
+      </Alert>
 
-        {/* MATCHES COLUMN */}
-        <Grid size={{ xs: 12, md: 8 }}>
-          <Typography variant="h6" gutterBottom sx={{ mb: 1, fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
-            📅 Matches
-          </Typography>
-
+      {/* MAIN TWO-COLUMN LAYOUT */}
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2 }}>
+        
+        {/* MATCHES LIST (Left Column) */}
+        <Box sx={{ flex: { xs: '1 1 100%', md: '0 0 68%' } }}>
           {Object.keys(groups).sort().map((groupName) => {
             const groupMatches = groups[groupName];
-            const teamList = getTeamNames(groupMatches);
-
             return (
-              <Accordion key={groupName} sx={{ mb: 1.5, border: '1px solid #e0e0e0', boxShadow: 'none', '&:before': { display: 'none' } }}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ bgcolor: '#fff', px: 2 }}>
-                  <Box sx={{ width: '100%', pr: 1 }}>
-                    <Typography variant="subtitle1" color="primary" fontWeight="bold">
-                      Group {groupName}
-                    </Typography>
-
-                    {/* Header Text Wrapping */}
-                    <Typography
-                      variant="caption"
-                      color="text.secondary"
-                      sx={{
-                        display: 'block',
-                        mt: 0.5,
-                        whiteSpace: 'normal',
-                        wordBreak: 'break-word',
-                        lineHeight: 1.3
-                      }}
-                    >
-                      {teamList}
+              <Accordion 
+                key={groupName} 
+                sx={{ 
+                  mb: 1.5, 
+                  borderRadius: '16px !important', 
+                  boxShadow: 'none', 
+                  border: '1px solid #e5e5ea',
+                  '&:before': { display: 'none' } 
+                }}
+              >
+                <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 48 }}>
+                  <Box>
+                    <Typography variant="subtitle1" fontWeight="800" color="#007AFF">{groupName}</Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, display: 'block' }}>
+                        {getTeamNames(groupMatches)}
                     </Typography>
                   </Box>
                 </AccordionSummary>
-
-                <AccordionDetails sx={{ bgcolor: '#fafafa', p: { xs: 0.5, sm: 2 } }}>
-                  <Grid spacing={2}>
+                
+                <AccordionDetails sx={{ p: { xs: 0.5, sm: 2 }, bgcolor: '#f9f9f9' }}>
+                  <Stack spacing={1}>
                     {groupMatches.map((match: any) => {
                       const pred = predsMap.get(match._id.toString());
-                      const matchDate = new Date(match.startTime).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                      const dateObj = new Date(match.startTime);
+                      const localDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                      const localTime = dateObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+                      const utcStr = dateObj.toISOString().replace('T', ' ').substring(0, 16);
 
                       return (
-                        // FIX: Force xs={12} so it ALWAYS takes full width (1 column per row)
-                        <Grid size={{ xs: 12 }} key={match._id}>
-                          <Paper
-                            elevation={0}
-                            sx={{
-                              p: 1.5,
-                              border: '1px solid #eee',
-                              display: 'flex',
-                              flexDirection: { xs: 'column', sm: 'row' },
-                              alignItems: 'center',
-                              justifyContent: 'space-between',
-                              gap: { xs: 1.5, sm: 0 }
-                            }}
-                          >
+                        <Paper
+                          key={match._id}
+                          elevation={0}
+                          sx={{
+                            p: { xs: 1, sm: 2 },
+                            borderRadius: '12px',
+                            border: '1px solid #efeff4',
+                            display: 'flex',
+                            flexDirection: 'row', // FORCED ROW: TEAMS STAY BESIDE EACH OTHER
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            bgcolor: '#fff',
+                            gap: 0.5
+                          }}
+                        >
+                          {/* HOME TEAM (Left) */}
+                          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', minWidth: 0 }}>
+                            <TeamWithFlag teamName={match.homeTeam} align="right" />
+                          </Box>
 
-                            {/* HOME TEAM */}
-                            <Box sx={{ flex: 1, width: '100%', display: 'flex', justifyContent: { xs: 'center', sm: 'flex-end' } }}>
-                              <TeamWithFlag teamName={match.homeTeam} align="right" />
-                            </Box>
+                          {/* CENTER INFO (Time, City, Inputs) */}
+                          <Box sx={{ 
+                            width: { xs: 105, sm: 180 }, // Strict width for mobile to prevent wrapping
+                            textAlign: 'center', 
+                            flexShrink: 0 
+                          }}>
+                            {/* Shortened City name for mobile space */}
+                            <Typography variant="caption" fontWeight="bold" sx={{ color: '#FF3B30', fontSize: { xs: 8, sm: 10 }, display: 'block' }}>
+                              📍 {match.city?.split(' ')[0] || match.ground?.split(' ')[0]}
+                            </Typography>
+                            
+                            <Typography variant="caption" fontWeight="800" sx={{ fontSize: { xs: 9, sm: 12 }, display: 'block', lineHeight: 1.1 }}>
+                              <LocalTime date={match.startTime} />
+                            </Typography>
+                            
+                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: { xs: 7, sm: 9 }, display: 'block' }}>
+                              UTC: {utcStr}
+                            </Typography>
 
-                            {/* CENTER: INPUT/SCORE */}
-                            <Box sx={{
-                              mx: { xs: 0, sm: 2 },
-                              textAlign: 'center',
-                              minWidth: { xs: '100%', sm: 120 },
-                              bgcolor: { xs: '#f5f5f5', sm: 'transparent' },
-                              borderRadius: 1,
-                              py: { xs: 1, sm: 0 }
-                            }}>
-                              <Typography variant="caption" display="block" color="text.secondary" gutterBottom sx={{ fontSize: 10 }}>
-                                {matchDate}
-                              </Typography>
-
+                            <Box sx={{ mt: 0.5 }}>
                               {match.isFinished ? (
                                 <Box>
-                                  <Typography variant="h6" sx={{ fontFamily: 'monospace', fontWeight: 'bold', color: '#333' }}>
+                                  <Typography variant="subtitle1" fontWeight="900" sx={{ fontSize: { xs: 14, sm: 20 }, lineHeight: 1 }}>
                                     {match.resultHome} - {match.resultAway}
                                   </Typography>
-                                  <Chip label={`+${pred ? pred.points : 0}`} color={pred?.points > 0 ? "success" : "default"} size="small" variant="filled" sx={{ height: 20, fontSize: 10 }} />
+                                  <Chip label={`+${pred ? pred.points : 0} pts`} color="success" size="small" sx={{ height: 16, fontSize: 8 }} />
                                 </Box>
                               ) : (
-                                <PredictFormMUI matchId={match._id.toString()} initialHome={pred?.predHome} initialAway={pred?.predAway} />
+                                <PredictFormMUI 
+                                  matchId={match._id.toString()} 
+                                  initialHome={pred?.predHome} 
+                                  initialAway={pred?.predAway} 
+                                />
                               )}
                             </Box>
+                          </Box>
 
-                            {/* AWAY TEAM */}
-                            <Box sx={{ flex: 1, width: '100%', display: 'flex', justifyContent: { xs: 'center', sm: 'flex-start' } }}>
-                              <TeamWithFlag teamName={match.awayTeam} align="left" />
-                            </Box>
-
-                          </Paper>
-                        </Grid>
+                          {/* AWAY TEAM (Right) */}
+                          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-start', minWidth: 0 }}>
+                            <TeamWithFlag teamName={match.awayTeam} align="left" />
+                          </Box>
+                        </Paper>
                       );
                     })}
-                  </Grid>
+                  </Stack>
                 </AccordionDetails>
               </Accordion>
             );
           })}
-        </Grid>
+        </Box>
 
-        {/* LEADERBOARD */}
-        <Grid size={{ xs: 12, md: 4 }}>
-          <Card elevation={3} sx={{ borderRadius: 2 }}>
+        {/* RANKING / LEADERBOARD (Right Column) */}
+        <Box sx={{ flex: { xs: '1 1 100%', md: '0 0 30%' } }}>
+          <Card elevation={0} sx={{ borderRadius: '24px', border: '1px solid #e5e5ea', position: { md: 'sticky' }, top: 20 }}>
             <CardContent sx={{ p: 2 }}>
               <Box display="flex" alignItems="center" gap={1} mb={2}>
-                <EmojiEventsIcon sx={{ color: '#ffb300', fontSize: 28 }} />
-                <Typography variant="h6" fontWeight="bold">Leaderboard</Typography>
+                <EmojiEventsIcon sx={{ color: '#FFD60A' }} />
+                <Typography variant="h6" fontWeight="900">Ranking</Typography>
               </Box>
-              <Divider sx={{ mb: 2 }} />
-
-              <Box sx={{ maxHeight: '70vh', overflowY: 'auto' }}>
+              <Box sx={{ maxHeight: '65vh', overflowY: 'auto' }}>
                 {users.map((user: any, index: number) => (
-                  <Box key={user._id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1, mb: 1, borderRadius: 1, bgcolor: index < 3 ? '#fff8e1' : 'transparent', borderLeft: index < 3 ? '4px solid #ffb300' : '4px solid transparent' }}>
-                    <Box display="flex" alignItems="center" gap={1.5}>
-                      <Typography fontWeight="bold" color="text.secondary" sx={{ width: 20, textAlign: 'center', fontSize: 13 }}>{index + 1}</Typography>
-                      <Avatar sx={{ width: 28, height: 28, bgcolor: index === 0 ? '#ffb300' : (index === 1 ? '#9e9e9e' : (index === 2 ? '#cd7f32' : '#e0e0e0')), fontSize: 12, fontWeight: 'bold' }}>{user.username.substring(0, 2).toUpperCase()}</Avatar>
-                      <Typography fontWeight="600" fontSize={13} sx={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 120, whiteSpace: 'nowrap' }}>{user.username}</Typography>
+                  <Box 
+                    key={user._id} 
+                    sx={{ 
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
+                      p: 1.5, mb: 1, borderRadius: '12px',
+                      bgcolor: user._id.toString() === session.user.id ? '#F2F2F7' : 'transparent',
+                      border: user._id.toString() === session.user.id ? '1px solid #007AFF' : 'none'
+                    }}
+                  >
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <Typography variant="caption" fontWeight="bold" color="text.secondary" sx={{ width: 15 }}>{index + 1}</Typography>
+                      <Avatar sx={{ width: 28, height: 28, fontSize: 11, bgcolor: index === 0 ? '#FFD60A' : '#E5E5EA', color: '#000' }}>
+                        {user.username.charAt(0).toUpperCase()}
+                      </Avatar>
+                      <Typography variant="body2" fontWeight="700" sx={{ maxWidth: 80, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {user.username}
+                      </Typography>
                     </Box>
-                    <Typography fontWeight="bold" color="primary" fontSize={14}>{user.totalPoints} pts</Typography>
+                    <Typography variant="body2" fontWeight="900" color="#007AFF">{user.totalPoints} pts</Typography>
                   </Box>
                 ))}
               </Box>
             </CardContent>
           </Card>
-        </Grid>
-
-      </Grid>
+        </Box>
+      </Box>
     </Container>
   );
 }

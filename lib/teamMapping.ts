@@ -58,16 +58,12 @@ export const TEAM_CODES: Record<string, string> = {
 
     // OTHERS / PLAYOFF WINNERS (Add as needed)
     "Denmark": "DK",
-    "Italy": "IT",
-    "Ukraine": "UA",
     "Turkey": "TR",
     "Sweden": "SE",
-    "Poland": "PL",
-    "Nigeria": "NG",
-    "Bolivia": "BO",
-    "Costa Rica": "CR",
-    "Peru": "PE",
-    "Chile": "CL"
+    "DR Congo": "CD",
+    "Iraq": "IQ",
+    "Czech Republic": "CZ",
+    "Bosnia & Herzegovina": "BA"
 };
 
 export const getFlagCode = (teamName: string) => {

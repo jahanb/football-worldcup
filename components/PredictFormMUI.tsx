@@ -10,27 +10,40 @@ export default function PredictFormMUI({ matchId, initialHome, initialAway }: an
     const [loading, setLoading] = useState(false);
     const [saved, setSaved] = useState(false);
 
-    // Check if this is an update (did we have initial values?)
-    const isUpdate = initialHome !== undefined && initialHome !== null;
+    // FIX: Track if a prediction exists using state, so it updates immediately after saving
+    const [hasPrediction, setHasPrediction] = useState(initialHome !== undefined && initialHome !== null);
 
     const save = async () => {
-        // Basic validation: prevent empty submissions if desired
+        // Basic validation
         if (home === '' || away === '') return;
 
         setLoading(true);
         setSaved(false);
-        await fetch('/worldcup/api/predict', {
-            method: 'POST',
-            body: JSON.stringify({ matchId, home: Number(home), away: Number(away) }),
-        });
-        setLoading(false);
-        setSaved(true);
 
-        // Reset "Saved" state after 2 seconds
-        setTimeout(() => setSaved(false), 2000);
+        try {
+            const res = await fetch('/worldcup/api/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ matchId, home: Number(home), away: Number(away) }),
+            });
+
+            if (res.ok) {
+                setLoading(false);
+                setSaved(true);
+                setHasPrediction(true); // <--- This forces the button to switch to "Update" mode
+
+                // Reset "Saved" label after 2 seconds
+                setTimeout(() => setSaved(false), 2000);
+            } else {
+                setLoading(false);
+                alert('Failed to save');
+            }
+        } catch (error) {
+            setLoading(false);
+            alert('Network error');
+        }
     };
 
-    // Helper to prevent negative inputs
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === '-' || e.key === 'e') {
             e.preventDefault();
@@ -46,8 +59,8 @@ export default function PredictFormMUI({ matchId, initialHome, initialAway }: an
                     size="small"
                     value={home}
                     onChange={e => setHome(e.target.value)}
-                    onKeyDown={handleKeyDown} // <--- Blocks negative sign
-                    inputProps={{ min: 0, style: { textAlign: 'center' } }} // <--- Min 0
+                    onKeyDown={handleKeyDown}
+                    inputProps={{ min: 0, style: { textAlign: 'center' } }}
                     sx={{ width: 60, bgcolor: 'white' }}
                 />
                 <span style={{ fontWeight: 'bold' }}>-</span>
@@ -57,22 +70,25 @@ export default function PredictFormMUI({ matchId, initialHome, initialAway }: an
                     size="small"
                     value={away}
                     onChange={e => setAway(e.target.value)}
-                    onKeyDown={handleKeyDown} // <--- Blocks negative sign
-                    inputProps={{ min: 0, style: { textAlign: 'center' } }} // <--- Min 0
+                    onKeyDown={handleKeyDown}
+                    inputProps={{ min: 0, style: { textAlign: 'center' } }}
                     sx={{ width: 60, bgcolor: 'white' }}
                 />
             </Box>
             <Button
-                // Logic: If Saved -> Success(Green). If Update -> Warning(Orange). Else -> Primary(Blue)
-                color={saved ? "success" : (isUpdate ? "warning" : "primary")}
+                // Logic: 
+                // 1. Saved = Green (Success)
+                // 2. Has Prediction = Orange (Warning/Edit)
+                // 3. New = Blue (Primary)
+                color={saved ? "success" : (hasPrediction ? "warning" : "primary")}
                 variant={saved ? "contained" : "outlined"}
                 size="small"
                 onClick={save}
                 disabled={loading}
-                startIcon={loading ? <CircularProgress size={16} /> : (saved ? <SaveIcon /> : (isUpdate ? <EditIcon /> : null))}
+                startIcon={loading ? <CircularProgress size={16} /> : (saved ? <SaveIcon /> : (hasPrediction ? <EditIcon /> : null))}
                 sx={{ minWidth: 120, fontSize: '0.75rem' }}
             >
-                {loading ? '...' : (saved ? 'Saved' : (isUpdate ? 'Update Predict' : 'Predict'))}
+                {loading ? '...' : (saved ? 'Saved' : (hasPrediction ? 'Update Predict' : 'Predict'))}
             </Button>
         </Box>
     );
