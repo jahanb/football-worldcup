@@ -1,0 +1,24 @@
+ 
+    _id: ObjectId('69350bfcfd9bcfdce73814b4'),
+    username: 'Farhad',
+
+    _id: ObjectId('693459d628b8b92ecc244b56'),
+    username: 'atd',
+   
+    _id: ObjectId('6934cc45fd9bcfdce7381498'),
+    username: 'rmemar56@gmail.com',
+    
+    _id: ObjectId('6934c842fd9bcfdce738146a'),
+    username: 'aft9819@gmail.com',
+
+    _id: ObjectId('6a25b5a4fdfc903185d23296'),
+    username: 'farhads63@yahoo.com',
+   
+    db.users.updateOne(
+  { _id: ObjectId("69350bfcfd9bcfdce73814b4") },
+  {
+    $set: {
+      totalPoints: 0
+    }
+  }
+    )

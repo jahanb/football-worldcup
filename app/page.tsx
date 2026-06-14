@@ -10,7 +10,7 @@ import Link from "next/link";
 import PredictFormMUI from "@/components/PredictFormMUI";
 import LogoutButton from "@/components/LogoutButton";
 import TeamWithFlag from "@/components/TeamWithFlag";
-import LocalTime from "@/components/LocalTime"; // Import the new 
+import LocalTime from "@/components/LocalTime";
 
 import {
   Container, Typography, Box, Paper, Chip,
@@ -22,11 +22,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import LockIcon from '@mui/icons-material/Lock';
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  // 1. UNAUTHORIZED / GUEST VIEW
+  // 1. GUEST VIEW
   if (!session || !session.user || !session.user.id) {
     return (
       <Container maxWidth="sm" sx={{ mt: 10, textAlign: 'center', px: 2 }}>
@@ -70,16 +71,21 @@ export default async function Home() {
 
   const currentUser = users.find((u: any) => u._id.toString() === session.user.id);
 
+  // Lockdown comparison variables
+  const now = Date.now();
+  const oneHourInMs = 60 * 60 * 1000;
+
   return (
     <Container 
       maxWidth="lg" 
       sx={{ 
         py: 2, 
-        px: { xs: 0.5, sm: 2 }, // Ultra-thin padding for mobile to save space
+        px: { xs: 0.5, sm: 2 }, 
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        WebkitFontSmoothing: 'antialiased',
       }}
     >
-      {/* HEADER SECTION */}
+      {/* HEADER */}
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', mb: 3, gap: 2 }}>
         <Box display="flex" alignItems="center" gap={1.5}>
           <img src="/worldcup/medlar.png" alt="Logo" style={{ width: 40, height: 40 }} />
@@ -96,28 +102,21 @@ export default async function Home() {
         </Paper>
       </Box>
 
-      {/* 1-HOUR RULE ALERT */}
-      <Alert icon={<AccessTimeIcon fontSize="small" />} severity="info" sx={{ mb: 3, borderRadius: '12px', fontWeight: 600, fontSize: { xs: 11, sm: 13 } }}>
-        Predictions lock 1 hour before kickoff.
+      {/* RULE ALERT */}
+      <Alert icon={<AccessTimeIcon fontSize="small" />} severity="info" sx={{ mb: 3, borderRadius: '12px', fontWeight: 600, fontSize: { xs: 10, sm: 13 } }}>
+        Predictions lock 1 hour before kickoff. Only positive scores allowed.
       </Alert>
 
-      {/* MAIN TWO-COLUMN LAYOUT */}
+      {/* CONTENT */}
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2 }}>
         
-        {/* MATCHES LIST (Left Column) */}
         <Box sx={{ flex: { xs: '1 1 100%', md: '0 0 68%' } }}>
           {Object.keys(groups).sort().map((groupName) => {
             const groupMatches = groups[groupName];
             return (
               <Accordion 
                 key={groupName} 
-                sx={{ 
-                  mb: 1.5, 
-                  borderRadius: '16px !important', 
-                  boxShadow: 'none', 
-                  border: '1px solid #e5e5ea',
-                  '&:before': { display: 'none' } 
-                }}
+                sx={{ mb: 1.5, borderRadius: '16px !important', boxShadow: 'none', border: '1px solid #e5e5ea', '&:before': { display: 'none' } }}
               >
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 48 }}>
                   <Box>
@@ -132,10 +131,11 @@ export default async function Home() {
                   <Stack spacing={1}>
                     {groupMatches.map((match: any) => {
                       const pred = predsMap.get(match._id.toString());
-                      const dateObj = new Date(match.startTime);
-                      const localDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                      const localTime = dateObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-                      const utcStr = dateObj.toISOString().replace('T', ' ').substring(0, 16);
+                      
+                      // TIME LOGIC
+                      const matchTime = new Date(match.startTime).getTime();
+                      const isLocked = now > (matchTime - oneHourInMs);
+                      const utcStr = new Date(match.startTime).toISOString().replace('T', ' ').substring(0, 16);
 
                       return (
                         <Paper
@@ -146,32 +146,25 @@ export default async function Home() {
                             borderRadius: '12px',
                             border: '1px solid #efeff4',
                             display: 'flex',
-                            flexDirection: 'row', // FORCED ROW: TEAMS STAY BESIDE EACH OTHER
+                            flexDirection: 'row', 
                             alignItems: 'center',
                             justifyContent: 'space-between',
                             bgcolor: '#fff',
                             gap: 0.5
                           }}
                         >
-                          {/* HOME TEAM (Left) */}
+                          {/* HOME TEAM */}
                           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', minWidth: 0 }}>
                             <TeamWithFlag teamName={match.homeTeam} align="right" />
                           </Box>
 
-                          {/* CENTER INFO (Time, City, Inputs) */}
-                          <Box sx={{ 
-                            width: { xs: 105, sm: 180 }, // Strict width for mobile to prevent wrapping
-                            textAlign: 'center', 
-                            flexShrink: 0 
-                          }}>
-                            {/* Shortened City name for mobile space */}
+                          {/* CENTER SECTION */}
+                          <Box sx={{ width: { xs: 110, sm: 180 }, textAlign: 'center', flexShrink: 0 }}>
                             <Typography variant="caption" fontWeight="bold" sx={{ color: '#FF3B30', fontSize: { xs: 8, sm: 10 }, display: 'block' }}>
                               📍 {match.city?.split(' ')[0] || match.ground?.split(' ')[0]}
                             </Typography>
                             
-                            <Typography variant="caption" fontWeight="800" sx={{ fontSize: { xs: 9, sm: 12 }, display: 'block', lineHeight: 1.1 }}>
-                              <LocalTime date={match.startTime} />
-                            </Typography>
+                            <LocalTime date={match.startTime} />
                             
                             <Typography variant="caption" color="text.secondary" sx={{ fontSize: { xs: 7, sm: 9 }, display: 'block' }}>
                               UTC: {utcStr}
@@ -179,11 +172,23 @@ export default async function Home() {
 
                             <Box sx={{ mt: 0.5 }}>
                               {match.isFinished ? (
-                                <Box>
-                                  <Typography variant="subtitle1" fontWeight="900" sx={{ fontSize: { xs: 14, sm: 20 }, lineHeight: 1 }}>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                  <Typography variant="subtitle1" fontWeight="900" sx={{ fontSize: { xs: 16, sm: 22 }, lineHeight: 1 }}>
                                     {match.resultHome} - {match.resultAway}
                                   </Typography>
-                                  <Chip label={`+${pred ? pred.points : 0} pts`} color="success" size="small" sx={{ height: 16, fontSize: 8 }} />
+                                  <Typography sx={{ fontSize: { xs: 8, sm: 11 }, color: 'text.secondary', fontWeight: 500 }}>
+                                    Your Pick: {pred ? `${pred.predHome}-${pred.predAway}` : 'None'}
+                                  </Typography>
+                                  <Chip label={`+${pred ? pred.points : 0} pts`} color={pred?.points > 0 ? "success" : "default"} size="small" sx={{ height: 16, fontSize: 8, mt: 0.5 }} />
+                                </Box>
+                              ) : isLocked ? (
+                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 }}>
+                                    <Chip icon={<LockIcon style={{ fontSize: 10 }} />} label="Locked" color="error" variant="outlined" size="small" sx={{ height: 18, fontSize: 9, fontWeight: 'bold' }} />
+                                    {pred && (
+                                        <Typography sx={{ fontSize: 10, fontWeight: 'bold', color: '#666' }}>
+                                            Your Pick: {pred.predHome}-{pred.predAway}
+                                        </Typography>
+                                    )}
                                 </Box>
                               ) : (
                                 <PredictFormMUI 
@@ -195,7 +200,7 @@ export default async function Home() {
                             </Box>
                           </Box>
 
-                          {/* AWAY TEAM (Right) */}
+                          {/* AWAY TEAM */}
                           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-start', minWidth: 0 }}>
                             <TeamWithFlag teamName={match.awayTeam} align="left" />
                           </Box>
@@ -209,7 +214,7 @@ export default async function Home() {
           })}
         </Box>
 
-        {/* RANKING / LEADERBOARD (Right Column) */}
+        {/* RANKING */}
         <Box sx={{ flex: { xs: '1 1 100%', md: '0 0 30%' } }}>
           <Card elevation={0} sx={{ borderRadius: '24px', border: '1px solid #e5e5ea', position: { md: 'sticky' }, top: 20 }}>
             <CardContent sx={{ p: 2 }}>
@@ -222,8 +227,7 @@ export default async function Home() {
                   <Box 
                     key={user._id} 
                     sx={{ 
-                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
-                      p: 1.5, mb: 1, borderRadius: '12px',
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1.5, mb: 1, borderRadius: '12px',
                       bgcolor: user._id.toString() === session.user.id ? '#F2F2F7' : 'transparent',
                       border: user._id.toString() === session.user.id ? '1px solid #007AFF' : 'none'
                     }}
@@ -233,9 +237,7 @@ export default async function Home() {
                       <Avatar sx={{ width: 28, height: 28, fontSize: 11, bgcolor: index === 0 ? '#FFD60A' : '#E5E5EA', color: '#000' }}>
                         {user.username.charAt(0).toUpperCase()}
                       </Avatar>
-                      <Typography variant="body2" fontWeight="700" sx={{ maxWidth: 80, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {user.username}
-                      </Typography>
+                      <Typography variant="body2" fontWeight="700" sx={{ maxWidth: 80, overflow: 'hidden', textOverflow: 'ellipsis' }}>{user.username}</Typography>
                     </Box>
                     <Typography variant="body2" fontWeight="900" color="#007AFF">{user.totalPoints} pts</Typography>
                   </Box>

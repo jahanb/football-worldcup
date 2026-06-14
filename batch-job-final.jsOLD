@@ -102,21 +102,26 @@ async function updateMatchResults() {
 
     // Process each API match
     for (const apiMatch of apiMatches) {
-      // Find corresponding DB match
-      const dbMatch = dbMatches.find(
-        (m) =>
-          m.homeTeam === apiMatch.homeTeam.name &&
-          m.awayTeam === apiMatch.awayTeam.name
-      );
+      const apiTime = new Date(apiMatch.utcDate).getTime();
+      const homeTeam = apiMatch.homeTeam.name;
+      const awayTeam = apiMatch.awayTeam.name;
+
+      // STEP 1: Find corresponding DB match by startTime ONLY (within 1 minute tolerance)
+      const dbMatch = dbMatches.find((m) => {
+        if (!m.startTime) return false;
+        const dbTime = new Date(m.startTime).getTime();
+        const timeDiff = Math.abs(apiTime - dbTime);
+        return timeDiff < 60000; // Within 1 minute (60000ms)
+      });
 
       if (!dbMatch) {
         logger.warn(
-          `Match not found in DB: ${apiMatch.homeTeam.name} vs ${apiMatch.awayTeam.name}`
+          `Match not found in DB by startTime: ${homeTeam} vs ${awayTeam} at ${apiMatch.utcDate}`
         );
         continue;
       }
 
-      // Check if match is finished
+      // STEP 2: Check if match is finished
       if (apiMatch.status === 'FINISHED' && !dbMatch.isFinished) {
         logger.info(
           `Match found finished: ${dbMatch.homeTeam} vs ${dbMatch.awayTeam}`
@@ -125,8 +130,8 @@ async function updateMatchResults() {
         const resultHome = apiMatch.score.fullTime.home;
         const resultAway = apiMatch.score.fullTime.away;
 
-        // Update match with results
-        const updatedMatch = await Match.findByIdAndUpdate(
+        // STEP 3: Update match with results
+        await Match.findByIdAndUpdate(
           dbMatch._id,
           {
             isFinished: true,
@@ -140,11 +145,11 @@ async function updateMatchResults() {
           `Match updated: ${dbMatch.homeTeam} ${resultHome} - ${resultAway} ${dbMatch.awayTeam}`
         );
 
-        // Get all predictions for this match
+        // STEP 4: Get all predictions for this match
         const predictions = await Prediction.find({ matchId: dbMatch._id });
         logger.info(`Found ${predictions.length} predictions for this match`);
 
-        // Update user scores based on predictions
+        // STEP 5: Update user scores based on predictions
         for (const prediction of predictions) {
           // Calculate points using the scoring function
           const points = calculatePoints(

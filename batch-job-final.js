@@ -4,13 +4,17 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Import models - adjust paths based on your project structure
+// Import models
 import Match from './models/Match.ts';
 import Prediction from './models/Prediction.ts';
 import User from './models/User.ts';
 
-// Import scoring function
-import { calculatePoints } from './lib/scoring.ts';
+// Import scoring module
+import {
+  calculatePoints,
+  calculatePointDifference,
+  formatScoreLog,
+} from './lib/scoring.ts';
 
 const API_KEY = process.env.FOOTBALL_API_KEY;
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -19,6 +23,7 @@ const COMPETITION_CODE = process.env.COMPETITION_CODE || 'WC';
 const logger = {
   info: (msg) => console.log(`[INFO] ${new Date().toISOString()} - ${msg}`),
   error: (msg, err) => console.error(`[ERROR] ${new Date().toISOString()} - ${msg}`, err || ''),
+  success: (msg) => console.log(`[✓] ${new Date().toISOString()} - ${msg}`),
   warn: (msg) => console.warn(`[WARN] ${new Date().toISOString()} - ${msg}`),
 };
 
@@ -102,21 +107,26 @@ async function updateMatchResults() {
 
     // Process each API match
     for (const apiMatch of apiMatches) {
-      // Find corresponding DB match
-      const dbMatch = dbMatches.find(
-        (m) =>
-          m.homeTeam === apiMatch.homeTeam.name &&
-          m.awayTeam === apiMatch.awayTeam.name
-      );
+      const apiTime = new Date(apiMatch.utcDate).getTime();
+      const homeTeamName = apiMatch.homeTeam.name;
+      const awayTeamName = apiMatch.awayTeam.name;
+
+      // STEP 1: Find corresponding DB match by startTime ONLY (within 1 minute tolerance)
+      const dbMatch = dbMatches.find((m) => {
+        if (!m.startTime) return false;
+        const dbTime = new Date(m.startTime).getTime();
+        const timeDiff = Math.abs(apiTime - dbTime);
+        return timeDiff < 60000; // Within 1 minute (60000ms)
+      });
 
       if (!dbMatch) {
         logger.warn(
-          `Match not found in DB: ${apiMatch.homeTeam.name} vs ${apiMatch.awayTeam.name}`
+          `Match not found in DB by startTime: ${homeTeamName} vs ${awayTeamName} at ${apiMatch.utcDate}`
         );
         continue;
       }
 
-      // Check if match is finished
+      // STEP 2: Check if match is finished
       if (apiMatch.status === 'FINISHED' && !dbMatch.isFinished) {
         logger.info(
           `Match found finished: ${dbMatch.homeTeam} vs ${dbMatch.awayTeam}`
@@ -125,8 +135,8 @@ async function updateMatchResults() {
         const resultHome = apiMatch.score.fullTime.home;
         const resultAway = apiMatch.score.fullTime.away;
 
-        // Update match with results
-        const updatedMatch = await Match.findByIdAndUpdate(
+        // STEP 3: Update match with results
+        await Match.findByIdAndUpdate(
           dbMatch._id,
           {
             isFinished: true,
@@ -140,36 +150,52 @@ async function updateMatchResults() {
           `Match updated: ${dbMatch.homeTeam} ${resultHome} - ${resultAway} ${dbMatch.awayTeam}`
         );
 
-        // Get all predictions for this match
-        const predictions = await Prediction.find({ matchId: dbMatch._id });
+        // STEP 4: Get all predictions for this match
+        const predictions = await Prediction.find({
+          matchId: new mongoose.Types.ObjectId(dbMatch._id),
+        });
+
         logger.info(`Found ${predictions.length} predictions for this match`);
 
-        // Update user scores based on predictions
+        // STEP 5: Update user scores based on predictions
         for (const prediction of predictions) {
-          // Calculate points using the scoring function
-          const points = calculatePoints(
+          // Calculate points using the production-ready scoring function
+          const result = calculatePoints(
             prediction.predHome,
             prediction.predAway,
             resultHome,
             resultAway
           );
 
-          // Update prediction with points
+          // Handle atomic point difference (in case score was updated multiple times)
+          const oldPoints = Number(prediction.points) || 0;
+          const pointDiff = calculatePointDifference(result.points, oldPoints);
+
+          // Update prediction with new points
           await Prediction.findByIdAndUpdate(
             prediction._id,
-            { points },
+            { points: result.points },
             { new: true }
           );
 
-          // Update user's total score
-          await User.findByIdAndUpdate(
-            prediction.userId,
-            { $inc: { totalPoints: points } },
-            { new: true }
+          // Update user's total score (only if points changed)
+          if (pointDiff !== 0) {
+            await User.findByIdAndUpdate(
+              prediction.userId,
+              { $inc: { totalPoints: pointDiff } },
+              { new: true }
+            );
+          }
+
+          // Log with detailed breakdown
+          const scoreLog = formatScoreLog(
+            `${prediction.predHome}-${prediction.predAway}`,
+            `${resultHome}-${resultAway}`,
+            result
           );
 
-          logger.info(
-            `User ${prediction.userId} awarded ${points} points (pred: ${prediction.predHome}-${prediction.predAway}, actual: ${resultHome}-${resultAway})`
+          logger.success(
+            `User ${prediction.userId}: ${scoreLog} | Diff: +${pointDiff}`
           );
         }
       } else if (apiMatch.status === 'FINISHED' && dbMatch.isFinished) {
@@ -190,6 +216,7 @@ async function start() {
 
   logger.info('Batch job scheduler started');
   logger.info('Running every 10 minutes');
+  logger.info('Scoring: 1pt (H-Goal) + 1pt (A-Goal) + 1pt (Diff) + 2pts (Result) = Max 5pts');
 
   // Run immediately on start
   await updateMatchResults();

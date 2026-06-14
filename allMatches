@@ -1,0 +1,393 @@
+◇ injected env (6) from .env // tip: ⌘ override existing { override: true }
+
+📡 Fetching all matches from API...
+
+Found 104 total matches in API
+
+🔍 SEARCHING FOR MISSING MATCHES
+
+✓ South Africa vs South Korea
+  Found as: South Africa vs South Korea
+  API ID: 537332
+  Status: TIMED
+  Date: 2026-06-25T01:00:00Z
+
+✗ Bosnia & Herzegovina vs Qatar - NOT FOUND IN API
+
+✗ Bosnia and Herzegovina vs Qatar - NOT FOUND IN API
+
+✓ Morocco vs Haiti
+  Found as: Morocco vs Haiti
+  API ID: 537344
+  Status: TIMED
+  Date: 2026-06-24T22:00:00Z
+
+✓ Paraguay vs Australia
+  Found as: Paraguay vs Australia
+  API ID: 537350
+  Status: TIMED
+  Date: 2026-06-26T02:00:00Z
+
+✓ Ecuador vs Germany
+  Found as: Ecuador vs Germany
+  API ID: 537355
+  Status: TIMED
+  Date: 2026-06-25T20:00:00Z
+
+✓ Tunisia vs Netherlands
+  Found as: Tunisia vs Netherlands
+  API ID: 537361
+  Status: TIMED
+  Date: 2026-06-25T23:00:00Z
+
+✓ New Zealand vs Belgium
+  Found as: New Zealand vs Belgium
+  API ID: 537367
+  Status: TIMED
+  Date: 2026-06-27T03:00:00Z
+
+✓ Uruguay vs Spain
+  Found as: Uruguay vs Spain
+  API ID: 537373
+  Status: TIMED
+  Date: 2026-06-27T00:00:00Z
+
+✓ Senegal vs Iraq
+  Found as: Senegal vs Iraq
+  API ID: 537396
+  Status: TIMED
+  Date: 2026-06-26T19:00:00Z
+
+✓ Jordan vs Argentina
+  Found as: Jordan vs Argentina
+  API ID: 537401
+  Status: TIMED
+  Date: 2026-06-28T02:00:00Z
+
+✗ DR Congo vs Uzbekistan - NOT FOUND IN API
+
+✗ Democratic Republic of the Congo vs Uzbekistan - NOT FOUND IN API
+
+✓ Croatia vs Ghana
+  Found as: Croatia vs Ghana
+  API ID: 537414
+  Status: TIMED
+  Date: 2026-06-27T21:00:00Z
+
+
+📋 ALL MATCHES IN JUNE 2026 (for reference)
+
+Total matches in June 2026: 78
+
+Mexico vs South Africa
+  ID: 537327
+  Date: 2026-06-11T19:00:00Z
+
+South Korea vs Czechia
+  ID: 537328
+  Date: 2026-06-12T02:00:00Z
+
+Canada vs Bosnia-Herzegovina
+  ID: 537333
+  Date: 2026-06-12T19:00:00Z
+
+United States vs Paraguay
+  ID: 537345
+  Date: 2026-06-13T01:00:00Z
+
+Qatar vs Switzerland
+  ID: 537334
+  Date: 2026-06-13T19:00:00Z
+
+Brazil vs Morocco
+  ID: 537339
+  Date: 2026-06-13T22:00:00Z
+
+Haiti vs Scotland
+  ID: 537340
+  Date: 2026-06-14T01:00:00Z
+
+Australia vs Turkey
+  ID: 537346
+  Date: 2026-06-14T04:00:00Z
+
+Germany vs Curaçao
+  ID: 537351
+  Date: 2026-06-14T17:00:00Z
+
+Netherlands vs Japan
+  ID: 537357
+  Date: 2026-06-14T20:00:00Z
+
+Ivory Coast vs Ecuador
+  ID: 537352
+  Date: 2026-06-14T23:00:00Z
+
+Sweden vs Tunisia
+  ID: 537358
+  Date: 2026-06-15T02:00:00Z
+
+Spain vs Cape Verde Islands
+  ID: 537369
+  Date: 2026-06-15T16:00:00Z
+
+Belgium vs Egypt
+  ID: 537363
+  Date: 2026-06-15T19:00:00Z
+
+Saudi Arabia vs Uruguay
+  ID: 537370
+  Date: 2026-06-15T22:00:00Z
+
+Iran vs New Zealand
+  ID: 537364
+  Date: 2026-06-16T01:00:00Z
+
+France vs Senegal
+  ID: 537391
+  Date: 2026-06-16T19:00:00Z
+
+Iraq vs Norway
+  ID: 537392
+  Date: 2026-06-16T22:00:00Z
+
+Argentina vs Algeria
+  ID: 537397
+  Date: 2026-06-17T01:00:00Z
+
+Austria vs Jordan
+  ID: 537398
+  Date: 2026-06-17T04:00:00Z
+
+Portugal vs Congo DR
+  ID: 537403
+  Date: 2026-06-17T17:00:00Z
+
+England vs Croatia
+  ID: 537409
+  Date: 2026-06-17T20:00:00Z
+
+Ghana vs Panama
+  ID: 537410
+  Date: 2026-06-17T23:00:00Z
+
+Uzbekistan vs Colombia
+  ID: 537404
+  Date: 2026-06-18T02:00:00Z
+
+Czechia vs South Africa
+  ID: 537329
+  Date: 2026-06-18T16:00:00Z
+
+Switzerland vs Bosnia-Herzegovina
+  ID: 537335
+  Date: 2026-06-18T19:00:00Z
+
+Canada vs Qatar
+  ID: 537336
+  Date: 2026-06-18T22:00:00Z
+
+Mexico vs South Korea
+  ID: 537330
+  Date: 2026-06-19T01:00:00Z
+
+United States vs Australia
+  ID: 537348
+  Date: 2026-06-19T19:00:00Z
+
+Scotland vs Morocco
+  ID: 537342
+  Date: 2026-06-19T22:00:00Z
+
+Brazil vs Haiti
+  ID: 537341
+  Date: 2026-06-20T00:30:00Z
+
+Turkey vs Paraguay
+  ID: 537347
+  Date: 2026-06-20T03:00:00Z
+
+Netherlands vs Sweden
+  ID: 537359
+  Date: 2026-06-20T17:00:00Z
+
+Germany vs Ivory Coast
+  ID: 537353
+  Date: 2026-06-20T20:00:00Z
+
+Ecuador vs Curaçao
+  ID: 537354
+  Date: 2026-06-21T00:00:00Z
+
+Tunisia vs Japan
+  ID: 537360
+  Date: 2026-06-21T04:00:00Z
+
+Spain vs Saudi Arabia
+  ID: 537371
+  Date: 2026-06-21T16:00:00Z
+
+Belgium vs Iran
+  ID: 537365
+  Date: 2026-06-21T19:00:00Z
+
+Uruguay vs Cape Verde Islands
+  ID: 537372
+  Date: 2026-06-21T22:00:00Z
+
+New Zealand vs Egypt
+  ID: 537366
+  Date: 2026-06-22T01:00:00Z
+
+Argentina vs Austria
+  ID: 537399
+  Date: 2026-06-22T17:00:00Z
+
+France vs Iraq
+  ID: 537393
+  Date: 2026-06-22T21:00:00Z
+
+Norway vs Senegal
+  ID: 537394
+  Date: 2026-06-23T00:00:00Z
+
+Jordan vs Algeria
+  ID: 537400
+  Date: 2026-06-23T03:00:00Z
+
+Portugal vs Uzbekistan
+  ID: 537405
+  Date: 2026-06-23T17:00:00Z
+
+England vs Ghana
+  ID: 537411
+  Date: 2026-06-23T20:00:00Z
+
+Panama vs Croatia
+  ID: 537412
+  Date: 2026-06-23T23:00:00Z
+
+Colombia vs Congo DR
+  ID: 537406
+  Date: 2026-06-24T02:00:00Z
+
+Switzerland vs Canada
+  ID: 537337
+  Date: 2026-06-24T19:00:00Z
+
+Bosnia-Herzegovina vs Qatar
+  ID: 537338
+  Date: 2026-06-24T19:00:00Z
+
+Morocco vs Haiti
+  ID: 537344
+  Date: 2026-06-24T22:00:00Z
+
+Scotland vs Brazil
+  ID: 537343
+  Date: 2026-06-24T22:00:00Z
+
+Czechia vs Mexico
+  ID: 537331
+  Date: 2026-06-25T01:00:00Z
+
+South Africa vs South Korea
+  ID: 537332
+  Date: 2026-06-25T01:00:00Z
+
+Ecuador vs Germany
+  ID: 537355
+  Date: 2026-06-25T20:00:00Z
+
+Curaçao vs Ivory Coast
+  ID: 537356
+  Date: 2026-06-25T20:00:00Z
+
+Tunisia vs Netherlands
+  ID: 537361
+  Date: 2026-06-25T23:00:00Z
+
+Japan vs Sweden
+  ID: 537362
+  Date: 2026-06-25T23:00:00Z
+
+Turkey vs United States
+  ID: 537349
+  Date: 2026-06-26T02:00:00Z
+
+Paraguay vs Australia
+  ID: 537350
+  Date: 2026-06-26T02:00:00Z
+
+Norway vs France
+  ID: 537395
+  Date: 2026-06-26T19:00:00Z
+
+Senegal vs Iraq
+  ID: 537396
+  Date: 2026-06-26T19:00:00Z
+
+Uruguay vs Spain
+  ID: 537373
+  Date: 2026-06-27T00:00:00Z
+
+Cape Verde Islands vs Saudi Arabia
+  ID: 537374
+  Date: 2026-06-27T00:00:00Z
+
+New Zealand vs Belgium
+  ID: 537367
+  Date: 2026-06-27T03:00:00Z
+
+Egypt vs Iran
+  ID: 537368
+  Date: 2026-06-27T03:00:00Z
+
+Panama vs England
+  ID: 537413
+  Date: 2026-06-27T21:00:00Z
+
+Croatia vs Ghana
+  ID: 537414
+  Date: 2026-06-27T21:00:00Z
+
+Colombia vs Portugal
+  ID: 537407
+  Date: 2026-06-27T23:30:00Z
+
+Congo DR vs Uzbekistan
+  ID: 537408
+  Date: 2026-06-27T23:30:00Z
+
+Jordan vs Argentina
+  ID: 537401
+  Date: 2026-06-28T02:00:00Z
+
+Algeria vs Austria
+  ID: 537402
+  Date: 2026-06-28T02:00:00Z
+
+Unknown vs Unknown
+  ID: 537417
+  Date: 2026-06-28T19:00:00Z
+
+Unknown vs Unknown
+  ID: 537423
+  Date: 2026-06-29T17:00:00Z
+
+Unknown vs Unknown
+  ID: 537415
+  Date: 2026-06-29T20:30:00Z
+
+Unknown vs Unknown
+  ID: 537418
+  Date: 2026-06-30T01:00:00Z
+
+Unknown vs Unknown
+  ID: 537424
+  Date: 2026-06-30T17:00:00Z
+
+Unknown vs Unknown
+  ID: 537416
+  Date: 2026-06-30T21:00:00Z
+
