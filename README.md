@@ -18,7 +18,9 @@ npm run build
 npm run start
 
 use this url to access the app
-http://localhost:3011/worldcup
+for change the games http://localhost:3011/worldcup/admin
+for define the new user and login http://localhost:3011/worldcup/login
+
 login and predict matches
 ```
 

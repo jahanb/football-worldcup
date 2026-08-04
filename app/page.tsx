@@ -105,6 +105,13 @@ export default async function Home() {
       {/* RULE ALERT */}
       <Alert icon={<AccessTimeIcon fontSize="small" />} severity="info" sx={{ mb: 3, borderRadius: '12px', fontWeight: 600, fontSize: { xs: 10, sm: 13 } }}>
         Predictions lock 1 hour before kickoff. Only positive scores allowed.
+              <h1 style={{
+  fontSize: '4rem',
+  animation: 'blink 1s infinite',
+  fontWeight: 'bold'
+}}>
+
+</h1>
       </Alert>
 
       {/* CONTENT */}

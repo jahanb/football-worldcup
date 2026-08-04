@@ -60,7 +60,14 @@ async function main() {
   await connectDatabase();
   const success = await verifyExternalIds();
   
-  
+  if (success) {
+    console.log('Next step: Restart batch job');
+    console.log('  pkill -f "tsx batch-externalid.js"');
+    console.log('  nohup npx tsx batch-externalid.js > batch.log 2>&1 &');
+  } else {
+    console.log('\nNext step: Run migration again');
+    console.log('  npx tsx populate-missing-externalids.js');
+  }
   
   process.exit(success ? 0 : 1);
 }

@@ -1,210 +1,125 @@
-import cron from 'node-cron';
+import axios from 'axios';
 import mongoose from 'mongoose';
+import Match from './models/Match.ts'; 
+import Prediction from './models/Prediction.ts';
+import User from './models/User.ts';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Import models - adjust paths based on your project structure
-import Match from './models/Match.ts';
-import Prediction from './models/Prediction.ts';
-import User from './models/User.ts';
-
-// Import scoring function
-import { calculatePoints } from './lib/scoring.ts';
-
 const API_KEY = process.env.FOOTBALL_API_KEY;
-const MONGODB_URI = process.env.MONGODB_URI;
-const COMPETITION_CODE = process.env.COMPETITION_CODE || 'WC';
+const MONGO_URI = process.env.MONGODB_URI;
 
-const logger = {
-  info: (msg) => console.log(`[INFO] ${new Date().toISOString()} - ${msg}`),
-  error: (msg, err) => console.error(`[ERROR] ${new Date().toISOString()} - ${msg}`, err || ''),
-  warn: (msg) => console.warn(`[WARN] ${new Date().toISOString()} - ${msg}`),
-};
+/**
+ * SCORING LOGIC (The 5-Point Rule)
+ */
+function calculatePoints(pHome, pAway, aHome, aAway) {
+    let points = 0;
+    
+    const ph = Number(pHome);
+    const pa = Number(pAway);
+    const ah = Number(aHome);
+    const aa = Number(aAway);
 
-async function connectDatabase() {
-  try {
-    if (mongoose.connection.readyState === 1) {
-      logger.info('Already connected to MongoDB');
-      return;
-    }
+    // Rule 1: Correct number of goals per team (1 pt each)
+    if (ph === ah) points += 1;
+    if (pa === aa) points += 1;
 
-    await mongoose.connect(MONGODB_URI || 'mongodb://localhost:27017/test');
-    logger.info('Connected to MongoDB');
-  } catch (error) {
-    logger.error('MongoDB connection failed:', error);
-    process.exit(1);
-  }
+    // Rule 2: Correct Goal Difference (1 pt)
+    const predDiff = ph - pa;
+    const actDiff = ah - aa;
+    if (predDiff === actDiff) points += 1;
+
+    // Rule 3: Correct Result Win/Draw/Loss (2 pts)
+    if (Math.sign(predDiff) === Math.sign(actDiff)) points += 2;
+
+    return points;
 }
 
-async function getTodayMatches() {
-  try {
-    if (!API_KEY) {
-      throw new Error('FOOTBALL_DATA_API_KEY environment variable not set');
-    }
+async function syncAndScore() {
+    try {
+        console.log(`[${new Date().toLocaleString()}] Starting Sync...`);
+        await mongoose.connect(MONGO_URI);
 
-    const response = await fetch(
-      `https://api.football-data.org/v4/competitions/${COMPETITION_CODE}/matches`,
-      {
-        headers: {
-          'X-Auth-Token': API_KEY,
-        },
-      }
-    );
+        // 1. Get Today's Date for filtering
+        const todayStr = new Date().toISOString().split('T')[0];
 
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    }
+        // 2. Fetch matches from API (Filtered for World Cup 'WC')
+        const response = await axios.get(`https://api.football-data.org/v4/competitions/WC/matches`, {
+            headers: { 'X-Auth-Token': API_KEY },
+            params: { dateFrom: todayStr, dateTo: todayStr } // Production: only today
+        });
 
-    const data = await response.json();
+        const externalMatches = response.data.matches;
 
-    // Filter matches for today
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    const todayMatches = data.matches.filter((match) => {
-      const matchDate = new Date(match.utcDate);
-      return matchDate >= today && matchDate < tomorrow;
-    });
-
-    return todayMatches;
-  } catch (error) {
-    logger.error('Failed to fetch matches from API:', error);
-    return [];
-  }
-}
-
-async function updateMatchResults() {
-  try {
-    logger.info('Starting batch job - checking for finished matches...');
-
-    // Get today's matches from API
-    const apiMatches = await getTodayMatches();
-
-    if (apiMatches.length === 0) {
-      logger.info('No matches found for today');
-      return;
-    }
-
-    logger.info(`Found ${apiMatches.length} matches for today`);
-
-    // Get all unfinished matches from DB
-    const dbMatches = await Match.find({ isFinished: false });
-
-    if (dbMatches.length === 0) {
-      logger.info('No unfinished matches in database');
-      return;
-    }
-
-    logger.info(`Found ${dbMatches.length} unfinished matches in database`);
-
-    // Process each API match
-    for (const apiMatch of apiMatches) {
-      // Find corresponding DB match
-      const dbMatch = dbMatches.find(
-        (m) =>
-          m.homeTeam === apiMatch.homeTeam.name &&
-          m.awayTeam === apiMatch.awayTeam.name
-      );
-
-      if (!dbMatch) {
-        logger.warn(
-          `Match not found in DB: ${apiMatch.homeTeam.name} vs ${apiMatch.awayTeam.name}`
-        );
-        continue;
-      }
-
-      // Check if match is finished
-      if (apiMatch.status === 'FINISHED' && !dbMatch.isFinished) {
-        logger.info(
-          `Match found finished: ${dbMatch.homeTeam} vs ${dbMatch.awayTeam}`
-        );
-
-        const resultHome = apiMatch.score.fullTime.home;
-        const resultAway = apiMatch.score.fullTime.away;
-
-        // Update match with results
-        const updatedMatch = await Match.findByIdAndUpdate(
-          dbMatch._id,
-          {
-            isFinished: true,
-            resultHome,
-            resultAway,
-          },
-          { new: true }
-        );
-
-        logger.info(
-          `Match updated: ${dbMatch.homeTeam} ${resultHome} - ${resultAway} ${dbMatch.awayTeam}`
-        );
-
-        // Get all predictions for this match
-        const predictions = await Prediction.find({ matchId: dbMatch._id });
-        logger.info(`Found ${predictions.length} predictions for this match`);
-
-        // Update user scores based on predictions
-        for (const prediction of predictions) {
-          // Calculate points using the scoring function
-          const points = calculatePoints(
-            prediction.predHome,
-            prediction.predAway,
-            resultHome,
-            resultAway
-          );
-
-          // Update prediction with points
-          await Prediction.findByIdAndUpdate(
-            prediction._id,
-            { points },
-            { new: true }
-          );
-
-          // Update user's total score
-          await User.findByIdAndUpdate(
-            prediction.userId,
-            { $inc: { totalPoints: points } },
-            { new: true }
-          );
-
-          logger.info(
-            `User ${prediction.userId} awarded ${points} points (pred: ${prediction.predHome}-${prediction.predAway}, actual: ${resultHome}-${resultAway})`
-          );
+        if (!externalMatches || externalMatches.length === 0) {
+            console.log("No World Cup matches scheduled for today.");
+            return;
         }
-      } else if (apiMatch.status === 'FINISHED' && dbMatch.isFinished) {
-        logger.info(
-          `Match already updated: ${dbMatch.homeTeam} vs ${dbMatch.awayTeam} (skipping)`
-        );
-      }
+
+        for (let ext of externalMatches) {
+            if (ext.status === 'FINISHED') {
+                const hScore = ext.score.fullTime.home;
+                const aScore = ext.score.fullTime.away;
+
+                if (hScore === null || aScore === null) continue;
+
+                // 3. Find and Update the Match
+                // We use homeTeam name and today's date to prevent matching wrong years
+                const match = await Match.findOneAndUpdate(
+                    { 
+                        homeTeam: ext.homeTeam.name,
+                        isFinished: false, // Only process matches not yet "closed"
+                        startTime: {
+                            $gte: new Date(todayStr + "T00:00:00Z"),
+                            $lte: new Date(todayStr + "T23:59:59Z")
+                        }
+                    },
+                    {
+                        resultHome: hScore,
+                        resultAway: aScore,
+                        isFinished: true,
+                        externalId: ext.id
+                    },
+                    { new: true }
+                );
+
+                if (match) {
+                    console.log(`✅ MATCH FINISHED: ${match.homeTeam} ${hScore}-${aScore} ${match.awayTeam}`);
+                    
+                    // 4. Find all predictions for this match
+                    const predictions = await Prediction.find({ matchId: match._id });
+                    console.log(`   Found ${predictions.length} predictions to calculate.`);
+
+                    for (const pred of predictions) {
+                        const earned = calculatePoints(pred.predHome, pred.predAway, hScore, aScore);
+                        
+                        // Use point difference logic to avoid double-counting if script re-runs
+                        const oldPoints = pred.points || 0;
+                        const diff = earned - oldPoints;
+
+                        if (diff !== 0) {
+                            // Update individual prediction record
+                            await Prediction.findByIdAndUpdate(pred._id, { points: earned });
+
+                            // Update User's total points in the ranking collection
+                            await User.findByIdAndUpdate(pred.userId, { 
+                                $inc: { totalPoints: diff } 
+                            });
+                            
+                            console.log(`   👤 User ${pred.userId} awarded ${earned} points (Diff: ${diff})`);
+                        }
+                    }
+                }
+            }
+        }
+    } catch (err) {
+        console.error('❌ Sync/Score Error:', err.message);
+    } finally {
+        await mongoose.disconnect();
+        console.log("Sync Finished.");
+        process.exit();
     }
-
-    logger.info('Batch job completed successfully');
-  } catch (error) {
-    logger.error('Error during batch job execution:', error);
-  }
 }
 
-async function start() {
-  await connectDatabase();
-
-  logger.info('Batch job scheduler started');
-  logger.info('Running every 10 minutes');
-
-  // Run immediately on start
-  await updateMatchResults();
-
-  // Schedule to run every 10 minutes
-  cron.schedule('*/10 * * * *', updateMatchResults);
-
-  logger.info('Cron job scheduled');
-}
-
-// Graceful shutdown
-process.on('SIGINT', async () => {
-  logger.info('Shutting down gracefully...');
-  await mongoose.connection.close();
-  process.exit(0);
-});
-
-start();
+syncAndScore();

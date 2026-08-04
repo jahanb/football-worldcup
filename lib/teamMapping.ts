@@ -57,7 +57,6 @@ export const TEAM_CODES: Record<string, string> = {
     "Ghana": "GH",
 
     // OTHERS / PLAYOFF WINNERS (Add as needed)
-    "Denmark": "DK",
     "Turkey": "TR",
     "Sweden": "SE",
     "DR Congo": "CD",
@@ -71,9 +70,9 @@ export const getFlagCode = (teamName: string) => {
     // We try to find a known country in the name, or return null
     if (TEAM_CODES[teamName]) return TEAM_CODES[teamName];
 
-    // Optional: Try to split "Denmark-North Macedonia" and return first flag
-    const firstPart = teamName.split('-')[0].trim();
-    if (TEAM_CODES[firstPart]) return TEAM_CODES[firstPart];
+   
+  //  const firstPart = teamName.split('-')[0].trim();
+  //  if (TEAM_CODES[firstPart]) return TEAM_CODES[firstPart];
 
     return null; // No flag for unknown teams
 };
