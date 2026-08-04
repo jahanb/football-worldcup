@@ -17,6 +17,7 @@ bun dev
 npm run build
 npm run start
 
+mongoexport --uri="mongodb://localhost:27017" --db=test --collection=matches --out=matches.json
 use this url to access the app
 for change the games http://localhost:3011/worldcup/admin
 for define the new user and login http://localhost:3011/worldcup/login
