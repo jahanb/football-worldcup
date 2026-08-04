@@ -24,6 +24,13 @@ for define the new user and login http://localhost:3011/worldcup/login
 
 login and predict matches
 ```
+.env 
+# MongoDB Configuration
+MONGODB_URI=mongodb://localhost:27017/test
+FOOTBALL_API_KEY=770664b6b77e4a95a4f9372bd61dc9e0
+#
+NEXTAUTH_URL=http://localhost:3011/worldcup
+NEXTAUTH_SECRET=24fce6ba353792bc0c07db8dc275387257ebe832f7ef26e2dee6ec5ecd0dd9e6
 
 World Cup Predictor application with:
 ✅ User Authentication (Login/Register)
